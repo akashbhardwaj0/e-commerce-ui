@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./NewCollections.css";
 import Item from "../Items/Item";
+import Api from "../../Api/Api"
 
 const NewCollections = () => {
   const[new_collection, setNew_Collection] = useState([]);
   useEffect(()=>{
-    const url = "http://localhost:4000/newcollection"
-    fetch(url).then((response)=>response.json()).then((data)=>setNew_Collection(data))
+    // const url = "http://localhost:4000/newcollection"
+    fetch(Api.newcollection).then((response)=>response.json()).then((data)=>setNew_Collection(data))
   },[])
   return (
     <div className="new-collections">
