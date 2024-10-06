@@ -1,4 +1,4 @@
-name: Deploy Node Application
+name: Deploy React Application
 
 on:
   push:
@@ -16,10 +16,13 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
-        run: docker build -t ak9761498165/ecommerce-ui:latest --build-args REACT_APP_NODE_ENV='production' --build-args REACT_APP_SERVER_BASE_URL=${{ secrets.REACT_APP_SERVER_BASE_URL }} .
+        run: |
+          docker buildx build -t ak9761498165/ecommerce-ui:latest \
+            --build-arg REACT_APP_NODE_ENV='production' \
+            --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
 
       - name: Publish Image to Docker Hub
-        run: docker push ak9761498165/ecommerce-ui
+        run: docker push ak9761498165/ecommerce-ui:latest
 
   deploy:
     needs: build
@@ -34,5 +37,5 @@ jobs:
       - name: Run Docker Container
         run: |
           docker run -d -p 3000:80 --name ecommerce-react-container \
-          -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+          -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
           ak9761498165/ecommerce-ui:latest
