@@ -19,7 +19,8 @@ jobs:
         run: |
           docker buildx build -t ak9761498165/ecommerce-ui:latest \
             --build-arg REACT_APP_NODE_ENV='production' \
-            --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
+            --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' \
+            --push .
 
       - name: Publish Image to Docker Hub
         run: docker push ak9761498165/ecommerce-ui:latest
