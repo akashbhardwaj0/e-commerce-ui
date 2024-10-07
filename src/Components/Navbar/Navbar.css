@@ -56,7 +56,6 @@
     font-size: 20px;
     font-weight: 500;
     background: #fff;
-    cursor: pointer;
 }
 .nav-login-cart button:active{
     background: #f3f3f3;
